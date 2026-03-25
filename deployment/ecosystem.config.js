@@ -3,7 +3,8 @@ const path = require('path');
 module.exports = {
   apps: [{
     name: "apple-rebilly-checkout",
-    script: path.join(__dirname, "../backend/server.js"),
+    script: "server.js",
+    cwd: path.join(__dirname, "../backend"),
     instances: 1,
     exec_mode: "fork",
     watch: false,
