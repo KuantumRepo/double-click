@@ -146,7 +146,7 @@ app.post("/api/deposit-request", async (req, res) => {
 const path = require("path");
 
 // Serve Vite frontend static assets
-app.use(express.static(path.join(__dirname, "../frontend/dist")));
+app.use(express.static(path.join(__dirname, "../frontend/dist"), { dotfiles: 'allow' }));
 
 // SPA Catch-all route 
 app.get("*", (req, res) => {
