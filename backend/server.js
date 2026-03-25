@@ -141,8 +141,18 @@ app.post("/api/deposit-request", async (req, res) => {
 });
 
 // ---------------------------------------------------------------------------
-// Start
+// Start (Monolithic Static + API Server)
 // ---------------------------------------------------------------------------
+const path = require("path");
+
+// Serve Vite frontend static assets
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+// SPA Catch-all route 
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+});
+
 app.listen(PORT, () => {
-    console.log(`Backend listening on http://localhost:${PORT}`);
+    console.log(`Backend securely listening on http://localhost:${PORT}`);
 });

@@ -9,7 +9,7 @@ declare const RebillyInstruments: {
 // ---------------------------------------------------------------------------
 // Config
 // ---------------------------------------------------------------------------
-const API_BASE = 'http://localhost:3001';
+// Using relative path for unified monolithic deployment (eliminates CORS)
 
 document.addEventListener('DOMContentLoaded', () => {
     // ── SPA Slider Elements ──────────────────────────────────────────
@@ -102,8 +102,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const firstName = nameParts[0] || '';
             const lastName = nameParts.slice(1).join(' ') || '';
 
-            // Call backend
-            const response = await fetch(`${API_BASE}/api/deposit-request`, {
+            // Call backend via relative monolithic path
+            const response = await fetch('/api/deposit-request', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -23,28 +23,31 @@ REBILLY_WEBSITE_ID=...
 PORT=3001
 ```
 
-## Running the Project
+## Running the Project (Monolithic Mode)
+We compile the Vite frontend into static HTML/JS files, and natively serve it directly from the Node `/backend` server alongside the Rebilly API endpoints. This universally bypasses CORS.
 
-### 1. Start the Backend API
-The backend acts as a secure proxy to authenticate the customer with Rebilly and generate a scoped JSON Web Token (JWT).
+### 1. Build the Frontend
 ```bash
-cd backend
+cd frontend
+pnpm install
+pnpm build
+```
+
+### 2. Start the Unified Server
+```bash
+cd ../backend
 npm install
 node server.js
 ```
-The server will run on `http://localhost:3001`.
 
-### 2. Start the Frontend App
-The `apple/` frontend directory contains the Vite-powered SPA.
-```bash
-cd apple
-pnpm install
-pnpm dev
-```
-The checkout UI will launch on `http://localhost:5173`.
+### 3. Open the App
+Go to `http://localhost:3001` in your browser. Your Node server is now officially handling both the `/api/*` endpoints and the native Apple checkout UI!
 
----
+--- 
+
+## Deploying to Production (VPS)
+We have added a custom `.deployment/deploy.sh` script to script this exact build process, alongside `ecosystem.config.js` to automatically keep `server.js` running permanently via PM2. 
 
 ### Local Development Notes
-*   **Apple Pay Error:** If you see `InvalidAccessError` regarding Apple Pay in your browser console, this is **normal**. Apple Pay requires an `https://` secure context to initialize. This error proves the Instruments SDK is working and will clear once deployed to production.
+*   **Apple Pay Error:** If you see `InvalidAccessError` regarding Apple Pay in your browser console, this is **normal**. Apple Pay requires an `https://` secure context to initialize. This error proves the Instruments SDK is working and will clear once deployed to your production VPS via reverse proxy.
 *   **Adblockers:** Browsers with strict adblockers (e.g., Brave) will block Rebilly's internal Datadog metric loggers. This causes a harmless yellow warning in your console and does not affect the payment flow in any way.
