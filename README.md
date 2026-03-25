@@ -46,7 +46,9 @@ Go to `http://localhost:3001` in your browser. Your Node server is now officiall
 --- 
 
 ## Deploying to Production (VPS)
-We have added a custom `.deployment/deploy.sh` script to script this exact build process, alongside `ecosystem.config.js` to automatically keep `server.js` running permanently via PM2. 
+To keep the project root strictly focused on source code, all production operations and deployment automations have been isolated into the `deployment/` directory.
+
+👉 **[Read the Deployment Operations Guide](deployment/README.md)** for full instructions on how the CI/CD pipeline, PM2 ecosystem, and automatic Caddy SSL integrations work.
 
 ### Local Development Notes
 *   **Apple Pay Error:** If you see `InvalidAccessError` regarding Apple Pay in your browser console, this is **normal**. Apple Pay requires an `https://` secure context to initialize. This error proves the Instruments SDK is working and will clear once deployed to your production VPS via reverse proxy.

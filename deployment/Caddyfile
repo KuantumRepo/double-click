@@ -1,0 +1,9 @@
+# Caddyfile
+# The industry standard for zero-config HTTPS reverse proxying.
+# 
+# 1. Change the domain below to your exact VPS domain name.
+# 2. Caddy will automatically fetch a Let's Encrypt SSL certificate for you!
+
+apple-checkout.yourdomain.com {
+    reverse_proxy localhost:3001
+}
