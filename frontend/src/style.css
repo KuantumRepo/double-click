@@ -1,0 +1,215 @@
+@charset "UTF-8";
+@import url('https://fonts.cdnfonts.com/css/sf-pro-display');
+
+:root {
+    --text-color: #1D1D1F;
+    --link-color: #0066CC;
+    --border-color: #d2d2d7; /* Updated to Apple strict input border grey */
+    --focus-color: #0066CC; /* Apple Science Blue */
+    --bg-color: #FFFFFF;
+    --nav-bg: rgba(245, 245, 247, 0.8);
+    --input-bg: hsla(0, 0%, 100%, 0.8);
+    --font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-family-body: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+    margin: 0; padding: 0; width: 100%; height: 100%;
+    background-color: var(--bg-color); color: var(--text-color);
+    font-family: var(--font-family-body);
+    -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+    font-size: 17px; line-height: 1.47059; letter-spacing: -0.022em;
+    overflow-x: hidden;
+}
+
+a { text-decoration: none; color: var(--link-color); cursor: pointer; }
+a:hover { text-decoration: underline; }
+
+.hidden { display: none !important; }
+.fade-hidden { display: none !important; opacity: 0; }
+.text-center { text-align: center !important; }
+.mt-24 { margin-top: 24px; }
+.mt-12 { margin-top: 12px; }
+.border-none { border-bottom: none !important; }
+
+/* Global Nav Bar (Replicated Apple Store 9 Mobile Layout) */
+#globalnav { width: 100%; height: 48px; background: rgba(255, 255, 255, 0.95); position: fixed; top: 0; left: 0; z-index: 9999; border-bottom: 1px solid var(--border-color); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); }
+.globalnav-content { max-width: 980px; margin: 0 auto; padding: 0 16px; height: 100%; display: flex; align-items: center; justify-content: space-between; }
+.globalnav-list { display: flex; align-items: center; width: 100%; padding: 0; margin: 0; list-style: none; justify-content: space-between; }
+.globalnav-item { display: flex; align-items: center; justify-content: center; height: 48px; cursor: pointer; opacity: 0.8; }
+.globalnav-item a { color: #1d1d1f; text-decoration: none; display: flex; align-items: center; }
+.globalnav-item:hover { opacity: 1; }
+.globalnav-item-apple { justify-content: flex-start; flex: 1; margin-left: 2px; }
+.globalnav-item-search, .globalnav-item-bag, .globalnav-menutrigger { width: 44px; justify-content: flex-end; }
+.globalnav-menutrigger button { background: none; border: none; padding: 0; cursor: pointer; color: #1d1d1f; display: flex; align-items: center; justify-content: flex-end; width: 100%; }
+
+/* Page Layout */
+.unified-signin { 
+    padding-top: 48px; 
+    display: block; 
+    padding-bottom: 20px;
+}
+
+/* SPA SLIDER SYSTEM */
+.spa-slider-viewport {
+    width: 100%; max-width: 460px; /* Reduced slightly to match Apple mobile max limits */
+    margin: 40px auto 20px; 
+    overflow: hidden; 
+    position: relative;
+    transition: opacity 0.3s ease, height 0.3s ease;
+}
+
+.spa-slider-track {
+    display: flex;
+    width: 300%; 
+    align-items: flex-start;
+    transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+    transform: translateX(0%);
+}
+
+.spa-view {
+    width: 33.3333%; 
+    flex-shrink: 0;
+    padding: 0 20px 40px; /* Adjusted side padding */
+}
+
+/* Nav */
+.spa-nav {
+    display: flex; justify-content: center; align-items: center; height: 50px; position: relative;
+    margin-bottom: 4px;
+}
+.spa-nav-title { font-size: 15px; font-weight: 500; font-family: var(--font-family); }
+.back-btn {
+    position: absolute; left: -4px; top: 0; height: 100%; background: none; border: none; padding: 0 10px;
+    cursor: pointer; display: flex; align-items: center; color: var(--link-color);
+}
+.back-btn svg { margin-right: 0; margin-top: 1px; }
+.back-btn:hover { opacity: 0.8; }
+
+/* Headers */
+.rs-signin-header { text-align: center; padding: 32px 0 24px; margin-bottom: 16px; } /* Apple centers headers initially */
+.rs-signin-header.margin-reduced { padding: 8px 0 16px; margin-top: 0; margin-bottom: 16px; }
+
+.typography-headline { font-family: var(--font-family); font-size: 28px; line-height: 1.14286; font-weight: 600; letter-spacing: 0.007em; margin: 0; }
+.typography-headline-small { font-family: var(--font-family); font-size: 24px; line-height: 1.16; font-weight: 600; margin: 0; }
+.typography-intro { font-size: 15px; line-height: 1.33337; margin-top: 12px; color: var(--text-color); }
+
+/* Form Elements */
+.step-content { padding-top: 8px; }
+.step-desc { font-size: 15px; color: #515154; margin: 0 0 20px; line-height: 1.4; text-align: center; }
+
+.form-textbox { position: relative; width: 100%; margin-bottom: 16px; } /* Tightened margin between inputs */
+.form-textbox-input {
+    width: 100%; height: 56px; padding: 22px 16px 6px 16px; /* Optimized padding for float labels */
+    border: 1px solid var(--border-color); border-radius: 12px; background-color: var(--input-bg);
+    font-size: 17px; font-weight: 400; color: var(--text-color); font-family: inherit;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease; outline: none; -webkit-appearance: none; appearance: none;
+}
+.form-textbox-input:focus { border-color: var(--focus-color); box-shadow: 0 0 0 1px var(--focus-color); }
+
+/* Float Label Math */
+.form-textbox-label {
+    position: absolute; top: 18px; left: 16px; font-size: 17px; color: #86868b;
+    transition: transform 0.2s ease, font-size 0.2s ease, color 0.2s ease; pointer-events: none; transform-origin: left top;
+}
+.form-textbox-input:focus + .form-textbox-label, .form-textbox-input:not(:placeholder-shown) + .form-textbox-label { 
+    transform: translateY(-9px); font-size: 12px; /* Apple perfectly lifts it */
+}
+
+/* Summary Block */
+.summary-block { background-color: #f5f5f7; border-radius: 12px; padding: 16px; margin-top: 0; margin-bottom: 24px; }
+.summary-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid #d2d2d7; }
+.summary-row:last-child { border-bottom: none; padding-bottom: 0; }
+.summary-row:first-child { padding-top: 0; }
+.summary-label { display: block; font-size: 13px; color: #515154; }
+.summary-val { display: block; font-size: 15px; font-weight: 400; color: var(--text-color); margin-top: 4px; }
+.step-edit-btn { background: none; border: none; color: var(--link-color); font-size: 15px; cursor: pointer; padding: 0; margin-top: 4px; }
+.step-edit-btn:hover { text-decoration: underline; }
+
+/* Buttons */
+.button-primary {
+    display: inline-block; width: 100%; text-align: center; font-size: 17px; font-weight: 600; letter-spacing: -.022em; font-family: var(--font-family);
+    padding: 17px 31px; border-radius: 12px; background-color: var(--focus-color); color: #ffffff; border: none; cursor: pointer; transition: background-color 0.2s, opacity 0.2s;
+}
+.button-primary:hover:not(:disabled) { background-color: #004499; }
+.button-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.button-apple-pay {
+    display: flex; width: 100%; justify-content: center; align-items: center; font-size: 19px; font-weight: 500; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+    padding: 15px 31px; border-radius: 12px; background-color: #000000; color: #ffffff; border: none; cursor: pointer; transition: opacity 0.2s; margin-top: 10px; margin-bottom: 16px;
+}
+.button-apple-pay:hover:not(:disabled) { opacity: 0.8; }
+.button-apple-pay:disabled { opacity: 0.4; cursor: not-allowed; }
+.apple-pay-text { display: inline-flex; align-items: center; margin-left: 5px; }
+.apple-pay-logo-inline { filter: brightness(0) invert(1); margin-right: 3px; }
+
+.microcopy { font-size: 12px; color: #515154; line-height: 1.33337; margin-bottom: 16px; }
+
+/* Success Container replaces everything */
+.rs-portal-container { width: 100%; max-width: 460px; margin: 40px auto 30px; padding: 0 20px 40px; display: flex; flex-direction: column; transition: opacity 0.5s ease; position: relative; z-index: 10; }
+
+.success-animation-wrapper { display: flex; justify-content: center; padding-top: 30px; margin-bottom: 10px; }
+.checkmark-svg { width: 76px; height: 76px; border-radius: 50%; display: block; stroke-width: 2; stroke: var(--focus-color); stroke-miterlimit: 10; padding: 2px; }
+.checkmark-circle { stroke-dasharray: 166; stroke-dashoffset: 166; stroke-width: 2; stroke-miterlimit: 10; stroke: var(--focus-color); fill: none; animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards; }
+.checkmark-check { transform-origin: 50% 50%; stroke-dasharray: 48; stroke-dashoffset: 48; animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.5s forwards; }
+@keyframes stroke { 100% { stroke-dashoffset: 0; } }
+
+.receipt-grid { width: 100%; border-top: 1px solid #d2d2d7; margin-bottom: 20px; }
+.receipt-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #d2d2d7; font-size: 15px; color: var(--text-color); }
+.receipt-row .label { color: #515154; }
+.receipt-row .value { font-weight: 500; }
+.success-color { color: #1D1D1F; } /* Apple receipt status uses black/dark text usually, not green */
+
+/* Bottom Info Divider */
+.rs-signin-bottom-info { max-width: 460px; margin: 30px auto 0; padding: 25px 0 35px 0; border-top: 1px solid var(--border-color); text-align: center; font-size: 14px; line-height: 1.4; color: #1d1d1f; border-bottom: 1px solid var(--border-color); }
+.rs-signin-bottom-info a { color: var(--link-color); text-decoration: underline; }
+
+/* Global Footer Secure Checkout Style (Apple Standard) */
+.ac-globalfooter { background-color: #f5f5f7; color: #6e6e73; padding: 20px 16px; font-size: 12px; line-height: 1.33337; width: 100%; position: relative; z-index: 10; }
+.ac-gf-content { max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; }
+.ac-gf-sosumi { padding-bottom: 11px; border-bottom: 1px solid #d2d2d7; margin-bottom: 11px; color: #6e6e73; text-align: left; }
+.ac-gf-sosumi a { color: #515154; text-decoration: underline; }
+.ac-gf-footer { display: flex; flex-direction: column; padding-top: 5px; text-align: left; }
+.ac-gf-footer-locale { margin-bottom: 10px; }
+.ac-gf-footer-locale a { color: #515154; text-decoration: none; display: block; }
+.ac-gf-footer-legal-copyright { margin-bottom: 5px; color: #6e6e73; }
+.ac-gf-footer-legal-links { display: flex; flex-wrap: wrap; row-gap: 5px; }
+.ac-gf-footer-legal-links a { color: #515154; text-decoration: none; border-right: 1px solid #d2d2d7; padding-right: 10px; margin-right: 10px; }
+.ac-gf-footer-legal-links a:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+.ac-gf-footer-legal-links a:hover { text-decoration: underline; color: #1d1d1f; }
+.ac-gf-footer-locale { margin-top: 12px; }
+.ac-gf-footer-locale a { color: #515154; font-weight: 400; }
+
+/* Rebilly Loading Spinner */
+.rebilly-loading {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; padding: 40px 0; gap: 16px;
+}
+.rebilly-spinner {
+    width: 28px; height: 28px;
+    border: 2.5px solid #d2d2d7;
+    border-top-color: var(--focus-color);
+    border-radius: 50%;
+    animation: rebilly-spin 0.7s linear infinite;
+}
+@keyframes rebilly-spin { 100% { transform: rotate(360deg); } }
+
+/* Rebilly Instruments Container */
+.rebilly-instruments {
+    width: 100%; min-height: 60px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.rebilly-instruments-summary {
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+/* Hide Rebilly deposit preset amount buttons (strategy requires ≥1, we override via CSS) */
+.rebilly-instruments [class*="deposit-buttons"],
+.rebilly-instruments [class*="DepositButtons"],
+.rebilly-instruments [class*="deposit-amount-buttons"] {
+    display: none !important;
+}
