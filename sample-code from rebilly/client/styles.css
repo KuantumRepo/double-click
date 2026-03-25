@@ -1,0 +1,21 @@
+body {
+    color: var(--color-text);
+    font:
+        16px -apple-system,
+        Avenir,
+        Helvetica,
+        Arial,
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 20px;
+    background: #eee;
+}
+
+#app {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 6px;
+    width: 500px;
+}

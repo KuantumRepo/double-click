@@ -1,0 +1,17 @@
+{
+  "name": "rebilly-example-invoice",
+  "version": "0.0.0",
+  "description": "Basic implementation of an integrated embedded payment form using the Rebilly Instruments JavaScript library, Express JS, and a JWT for authentication.",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "body-parser": "^1.20.2",
+    "rebilly-js-sdk": "^61.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
