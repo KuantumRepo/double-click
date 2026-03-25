@@ -11,11 +11,80 @@ This project runs as a monolithic system in production to eliminate Cross-Origin
 - The **Frontend SPA** (`/frontend`) is compiled into static files.
 - The **Backend Express API** (`/backend`) serves those static files directly, while alongside providing the `/api/deposit-request` routes on the exact same domain.
 
+Here’s a cleaned-up version that will render correctly in Markdown and work as copy‑paste commands in a terminal.  
+
+I also fixed the Markdown link syntax in the shell commands so they are valid.
+
+***
+
 ## 2. Global Server Requirements
-Before deploying, ensure the VPS has the latest version of Node.js installed, along with these global packages:
+
+Before deploying, ensure the VPS has the latest version of Node.js installed, along with these global packages.
+
+For automatic SSL certificates (required by Apple Pay), you must also install [Caddy Server](https://caddyserver.com/). [caddyserver](https://caddyserver.com/docs/running)
+
+### Amazon Linux
+
 ```bash
-npm install -g pnpm pm2
+sudo dnf install -y git curl tar && \
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash && \
+export NVM_DIR="$HOME/.nvm" && \
+source "$NVM_DIR/nvm.sh" && \
+nvm install 22 && \
+nvm use 22 && \
+nvm alias default 22 && \
+node -v && \
+npm install -g pnpm pm2 && \
+sudo rm -f /usr/local/bin/caddy /tmp/caddy.tar.gz && \
+CADDY_VERSION=$(curl -s https://api.github.com/repos/caddyserver/caddy/releases/latest | grep '"tag_name"' | sed -E 's/.*"v([^"]+)".*/\1/') && \
+echo "Installing Caddy v${CADDY_VERSION}..." && \
+curl -L "https://github.com/caddyserver/caddy/releases/download/v${CADDY_VERSION}/caddy_${CADDY_VERSION}_linux_amd64.tar.gz" -o /tmp/caddy.tar.gz && \
+tar -xzf /tmp/caddy.tar.gz -C /tmp && \
+sudo mv /tmp/caddy /usr/local/bin/caddy && \
+sudo chmod +x /usr/local/bin/caddy && \
+caddy version && \
+sudo groupadd --system caddy && \
+sudo useradd --system --gid caddy --create-home --home-dir /var/lib/caddy --shell /usr/sbin/nologin --comment "Caddy web server" caddy && \
+sudo mkdir -p /etc/caddy && \
+sudo chown -R caddy:caddy /etc/caddy && \
+sudo curl -L https://raw.githubusercontent.com/caddyserver/dist/master/init/caddy.service -o /etc/systemd/system/caddy.service && \
+sudo systemctl daemon-reload && \
+sudo systemctl enable caddy
 ```
+
+### Ubuntu
+
+```bash
+sudo apt update && \
+sudo apt install -y git curl tar && \
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash && \
+export NVM_DIR="$HOME/.nvm" && \
+source "$NVM_DIR/nvm.sh" && \
+nvm install 22 && \
+nvm use 22 && \
+nvm alias default 22 && \
+node -v && \
+npm install -g pnpm pm2 && \
+sudo rm -f /usr/local/bin/caddy /tmp/caddy.tar.gz && \
+CADDY_VERSION=$(curl -s https://api.github.com/repos/caddyserver/caddy/releases/latest | grep '"tag_name"' | sed -E 's/.*"v([^"]+)".*/\1/') && \
+echo "Installing Caddy v${CADDY_VERSION}..." && \
+curl -L "https://github.com/caddyserver/caddy/releases/download/v${CADDY_VERSION}/caddy_${CADDY_VERSION}_linux_amd64.tar.gz" -o /tmp/caddy.tar.gz && \
+tar -xzf /tmp/caddy.tar.gz -C /tmp && \
+sudo mv /tmp/caddy /usr/local/bin/caddy && \
+sudo chmod +x /usr/local/bin/caddy && \
+caddy version && \
+sudo groupadd --system caddy && \
+sudo useradd --system --gid caddy --create-home --home-dir /var/lib/caddy --shell /usr/sbin/nologin --comment "Caddy web server" caddy && \
+sudo mkdir -p /etc/caddy && \
+sudo chown -R caddy:caddy /etc/caddy && \
+sudo curl -L https://raw.githubusercontent.com/caddyserver/dist/master/init/caddy.service -o /etc/systemd/system/caddy.service && \
+sudo systemctl daemon-reload && \
+sudo systemctl enable caddy
+```
+
+You can drop this whole section back into your Deployment Operations Guide as-is.
+
+
 For automatic SSL certificates (required by Apple Pay), you must also install [Caddy Server](https://caddyserver.com/).
 
 ## 3. Configuration Files
